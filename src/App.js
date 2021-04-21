@@ -3,12 +3,17 @@ import './App.css';
 import Navbar from './components/layouts/Navbar';
 import Users from './components/users/Users.js';
 import Search from './components/users/Search';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 class App extends Component {
   state = {
     users: [],
     loading: false,
+  };
+
+  static propTypes = {
+    searchUsers: PropTypes.func.isRequired,
   };
   // async componentDidMount() {
   //   this.setState({ loading: true });
