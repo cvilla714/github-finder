@@ -24,6 +24,8 @@ class User extends Component {
         <Link to="/" className="btn btn-light">
           Back to Search
         </Link>
+        Hireable:{''}
+        {hireable ? <i className="fas fa-check text-sucess" /> : <i className="fas fa-times-circle text-danger" />}
       </Fragment>
     );
   }
