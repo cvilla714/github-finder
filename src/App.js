@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/layouts/Navbar';
 import Users from './components/users/Users.js';
+import User from './components/users/User.js';
 import Search from './components/users/Search';
 import PropTypes from 'prop-types';
 import Alert from './components/layouts/Alert';
@@ -12,6 +13,7 @@ import axios from 'axios';
 class App extends Component {
   state = {
     users: [],
+    user: {},
     loading: false,
     alert: null,
   };
@@ -37,6 +39,19 @@ class App extends Component {
     this.setState({ users: res.data.items, loading: false });
   };
 
+  //Get single Github User
+  getUser = async (username) => {
+    this.setState({ loading: true });
+
+    const res = await axios.get(`https://api.github.com/search/users/${username}`, {
+      headers: {
+        Authorization: `${process.env.REACT_APP_GITHUB_TOKEN}`,
+      },
+    });
+
+    this.setState({ user: res.data, loading: false });
+  };
+
   //Clear Users from state
   clearUsers = () => this.setState({ users: [], loading: false });
   // set up the alert
@@ -47,7 +62,7 @@ class App extends Component {
   };
 
   render() {
-    const { loading, users } = this.state;
+    const { loading, user, users } = this.state;
     return (
       <Router>
         <div className="App">
@@ -66,6 +81,7 @@ class App extends Component {
                 )}
               ></Route>
               <Route exact path="/about" component={About} />
+              <Route exact path="/user/:login" render={(props) => <User {...props} getUser={this.getUser} user={user} loading={loading} />} />
             </Switch>
           </div>
         </div>
