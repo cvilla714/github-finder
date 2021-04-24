@@ -7,12 +7,9 @@ import User from './components/users/User.js';
 import Search from './components/users/Search';
 import Alert from './components/layouts/Alert';
 import About from './components/pages/About';
-import axios from 'axios';
 import GithubState from './context/github/GithubState';
 
 const App = () => {
-  const [repos, setRepos] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
 
   // async componentDidMount() {
@@ -49,18 +46,18 @@ const App = () => {
   // };
 
   //Get users repositories
-  const getUserRepos = async (username) => {
-    setLoading(true);
+  // const getUserRepos = async (username) => {
+  //   setLoading(true);
 
-    const res = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`, {
-      headers: {
-        Authorization: `${process.env.REACT_APP_GITHUB_TOKEN}`,
-      },
-    });
+  //   const res = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`, {
+  //     headers: {
+  //       Authorization: `${process.env.REACT_APP_GITHUB_TOKEN}`,
+  //     },
+  //   });
 
-    setRepos(res.data);
-    setLoading(false);
-  };
+  //   setRepos(res.data);
+  //   setLoading(false);
+  // };
 
   //Clear Users from state
 
@@ -90,7 +87,7 @@ const App = () => {
                 )}
               ></Route>
               <Route exact path="/about" component={About} />
-              <Route exact path="/user/:login" render={(props) => <User {...props} getUserRepos={getUserRepos} repos={repos} />} />
+              <Route exact path="/user/:login" component={User} />
             </Switch>
           </div>
         </div>
