@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { SEARCH_USERS, SET_LOADING, CLEAR_USERS, GET_USER, GET_REPOS } from '../types';
 
 export default (state, action) => {
@@ -12,6 +13,12 @@ export default (state, action) => {
       return {
         ...state,
         user: action.payload,
+        loading: false,
+      };
+    case GET_REPOS:
+      return {
+        ...state,
+        repos: action.payload,
         loading: false,
       };
     case CLEAR_USERS:
